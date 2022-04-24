@@ -48,7 +48,7 @@ namespace SerialCom
             comboBoxCom.SelectedIndex = 0;
 
             /*------波特率设置-------*/
-            string[] baudRate = { "9600", "19200", "38400", "57600", "115200" };
+            string[] baudRate = { "9600", "19200", "38400", "57600", "115200", "921600" };
             foreach (string s in baudRate)
             {
                 comboBoxBaudRate.Items.Add(s);
@@ -246,8 +246,18 @@ namespace SerialCom
                 {
                     try
                     {
+                        int byteToRead = serialPort.BytesToRead;
+                        int readback_len = 0;
+                        textBoxReceive.Text += byteToRead + "\r\n";
+
+                        byte[] rx_buf = new byte[byteToRead];
+                        readback_len = serialPort.Read(rx_buf, 0, byteToRead);
+                        var input = System.Text.Encoding.Default.GetString(rx_buf);
+                        textBoxReceive.Text += input + "\r\n";
+#if false
                         String input = serialPort.ReadLine();
                         textBoxReceive.Text += input + "\r\n";
+#endif
                         // save data to file
                         if (saveDataFS != null)
                         {
@@ -269,9 +279,18 @@ namespace SerialCom
                 {
                     try
                     {
+                        int byteToRead = serialPort.BytesToRead;
+                        int readback_len = 0;
+                        textBoxReceive.Text += byteToRead + "\r\n";
 
+                        byte[] rx_buf = new byte[byteToRead];
+                        readback_len = serialPort.Read(rx_buf, 0, byteToRead);
+                        var input = System.Text.Encoding.Default.GetString(rx_buf);
+                        char[] values = input.ToCharArray();
+#if false
                         string input = serialPort.ReadLine();
                         char[] values = input.ToCharArray();
+#endif
                         foreach (char letter in values)
                         {
                             // Get the integral value of the character.
