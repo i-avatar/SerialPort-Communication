@@ -24,6 +24,31 @@ namespace SerialCom
         public MainForm()
         {
             InitializeComponent();
+
+            byte[] txBuf;
+            V3NC v3NC = new V3NC();
+            V3ncBoard board = new V3ncBoard();
+            
+            board.Temp.BmcArea = 25;
+            txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetAllTemp, V3nc_UartResponder.Bmc);
+            if (txBuf != null)
+            {
+                var input = System.Text.Encoding.Default.GetString(txBuf);
+                char[] values = input.ToCharArray();
+
+                foreach (char letter in values)
+                {
+                    // Get the integral value of the character.
+                    int value = Convert.ToInt32(letter);
+                    // Convert the decimal value to a hexadecimal value in string form.
+                    string hexOutput = String.Format("{0:X}", value);
+                    textBoxReceive.AppendText(hexOutput + " ");
+                    textBoxReceive.SelectionStart = textBoxReceive.Text.Length;
+                    textBoxReceive.ScrollToCaret();//滚动到光标处
+                                                   //textBoxReceive.Text += hexOutput + " ";
+
+                }
+            }
         }
 
 
@@ -287,6 +312,30 @@ namespace SerialCom
                         readback_len = serialPort.Read(rx_buf, 0, byteToRead);
                         var input = System.Text.Encoding.Default.GetString(rx_buf);
                         char[] values = input.ToCharArray();
+
+                        if (readback_len == 7)
+                        {
+                            V3NC v3NC = new V3NC();
+                            V3nc_Msg_Err v3Nc_Msg_Err = new V3nc_Msg_Err();
+
+                            // received buffer
+                            v3Nc_Msg_Err = v3NC.ValidateV3npMsg(rx_buf);
+                            V3nc_CmdCode v3nc_CmdCode = v3NC.GetV3npMsgCmdCode(rx_buf);
+
+                            // no error then send back to target
+                            if (v3Nc_Msg_Err == V3nc_Msg_Err.NoErr)
+                            {
+                                byte[] txBuf;
+                                V3ncBoard board = new V3ncBoard();
+
+                                // test
+                                board.Temp.BmcArea = 25;
+                                txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetAllTemp, V3nc_UartResponder.Bmc);
+
+                                // write buffer to uart
+                                serialPort.Write(txBuf, 0, txBuf.Length);
+                            }
+                        }
 #if false
                         string input = serialPort.ReadLine();
                         char[] values = input.ToCharArray();
@@ -353,21 +402,14 @@ namespace SerialCom
                     // Convert the decimal value to a hexadecimal value in string form.
                     string hexIutput = String.Format("{0:X}", value);
                     serialPort.WriteLine(hexIutput);
-
                 }
-
-
-
             }
-
         }
 
         //清空接收数据框
         private void buttonClearRecData_Click(object sender, EventArgs e)
         {
-            
             textBoxReceive.Text = "";
-
         }
 
 
@@ -384,7 +426,6 @@ namespace SerialCom
                 saveDataFS.Close(); // 关闭文件
                 saveDataFS = null;//释放文件句柄
             }
-
         }
 
         //刷新串口
@@ -412,7 +453,6 @@ namespace SerialCom
             comboBoxDataBit.SelectedIndex = 3;
             comboBoxCheckBit.SelectedIndex = 0;
             comboBoxStopBit.SelectedIndex = 0;
-
         }
 
         // 退出
@@ -441,7 +481,6 @@ namespace SerialCom
             comboBoxStopBit.SelectedIndex = 0;
             radioButtonSendDataASCII.Checked = true;
             radioButtonReceiveDataASCII.Checked = true;
-
         }
 
         // 保存接收数据到文件
@@ -456,8 +495,6 @@ namespace SerialCom
             {
                 saveDataFile = saveFileDialog.FileName;
             }
-
-
         }
     }
 }
