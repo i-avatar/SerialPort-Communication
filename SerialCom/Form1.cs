@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
@@ -24,6 +25,8 @@ namespace SerialCom
         public MainForm()
         {
             InitializeComponent();
+
+            InitializeComponentCustomized();
 
             byte[] txBuf;
             V3NC v3NC = new V3NC();
@@ -494,6 +497,59 @@ namespace SerialCom
             if (saveFileDialog.FileName != null)
             {
                 saveDataFile = saveFileDialog.FileName;
+            }
+        }
+
+        private void InitializeComponentCustomized()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name == "groupBoxTemp")
+                {
+                    foreach (Control t in c.Controls)
+                    {
+                        TextBox tb = t as TextBox;
+                        if (t is TextBox)
+                        {
+                            tb.KeyPress += new KeyPressEventHandler(KeyPressConstrainNum);
+                            tb.TextChanged += new EventHandler(TextChangedConstrainNum);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void TextChangedConstrainNum(object sender, EventArgs e)
+        {
+            var textbox = sender as TextBox;
+
+            if (textbox is TextBox)
+            {
+                int value;
+                if (int.TryParse(textbox.Text, out value))
+                {
+                    if (value > 255)
+                        textbox.Text = "255";
+                    else if (value < -255)
+                        textbox.Text = "-255";
+                }
+            }
+        }
+
+        private void KeyPressConstrainNum(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (Char)48 || e.KeyChar == (Char)49 ||
+               e.KeyChar == (Char)50 || e.KeyChar == (Char)51 ||
+               e.KeyChar == (Char)52 || e.KeyChar == (Char)53 ||
+               e.KeyChar == (Char)54 || e.KeyChar == (Char)55 ||
+               e.KeyChar == (Char)56 || e.KeyChar == (Char)57 ||
+               e.KeyChar == (Char)13 || e.KeyChar == (Char)8 || e.KeyChar == (Char)'-')
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
             }
         }
     }
