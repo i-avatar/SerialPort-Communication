@@ -29,7 +29,7 @@ namespace SerialCom
             InitializeComponentCustomized();
 
             byte[] txBuf;
-            V3NC v3NC = new V3NC();
+            V3NC v3NC = V3NC.Instance;
             V3ncBoard board = new V3ncBoard();
             
             board.Temp.BmcArea = 25;
@@ -318,7 +318,7 @@ namespace SerialCom
 
                         if (readback_len == 7)
                         {
-                            V3NC v3NC = new V3NC();
+                            V3NC v3NC = V3NC.Instance;
                             V3nc_Msg_Err v3Nc_Msg_Err = new V3nc_Msg_Err();
 
                             // received buffer
@@ -333,7 +333,7 @@ namespace SerialCom
 
                                 // test
                                 board.Temp.BmcArea = 25;
-                                txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetAllTemp, V3nc_UartResponder.Bmc);
+                                txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetAllTemp, v3NC.currentResponder);
 
                                 // write buffer to uart
                                 serialPort.Write(txBuf, 0, txBuf.Length);

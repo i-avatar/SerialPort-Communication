@@ -175,6 +175,20 @@ namespace SerialCom
 
 	public class V3NC
     {
+		static V3NC v3nc;
+
+		public static V3NC Instance
+        {
+            get
+            {
+				if (v3nc == null)
+					v3nc = new V3NC();
+				return v3nc;
+            }
+        }
+
+		protected V3NC() { }
+
 		public const int MAX_TX_PKT_SIZE = 16;
 		public const int MAX_RX_PKT_SIZE = 16;
 		public const byte START_CHAR = 0x7B;
@@ -185,6 +199,7 @@ namespace SerialCom
 		public const byte BASE_RESPONSE_MSG_SIZE = 0x04;
 		public const byte START_AND_END_CHAR_SIZE = 0x02;
 
+		public V3nc_UartResponder currentResponder = V3nc_UartResponder.Cpld;
 		public byte[] txBuf = new byte[MAX_TX_PKT_SIZE];
 		public byte[] rxBuf = new byte[MAX_RX_PKT_SIZE];
 		//public V3ncBoard Board;
