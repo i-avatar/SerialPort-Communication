@@ -84,6 +84,7 @@
             this.lbBmcAreaTemp = new System.Windows.Forms.Label();
             this.txBoxBmcAreaTemp = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBoxSerialPortSetting.SuspendLayout();
             this.groupBoxSendSetting.SuspendLayout();
@@ -481,7 +482,7 @@
             this.groupBoxTemp.Controls.Add(this.txBoxBmcAreaTemp);
             this.groupBoxTemp.Location = new System.Drawing.Point(906, 60);
             this.groupBoxTemp.Name = "groupBoxTemp";
-            this.groupBoxTemp.Size = new System.Drawing.Size(406, 462);
+            this.groupBoxTemp.Size = new System.Drawing.Size(193, 462);
             this.groupBoxTemp.TabIndex = 11;
             this.groupBoxTemp.TabStop = false;
             this.groupBoxTemp.Text = "groupBox1";
@@ -622,11 +623,21 @@
             this.txBoxBmcAreaTemp.TabIndex = 0;
             this.txBoxBmcAreaTemp.Text = "25";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1131, 75);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(141, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "V3NC 12V EXT Power";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1343, 550);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBoxTemp);
             this.Controls.Add(this.Button_Refresh);
             this.Controls.Add(this.groupBoxSendData);
@@ -720,6 +731,7 @@
         private System.Windows.Forms.Label lbBmcAreaTemp;
         private System.Windows.Forms.TextBox txBoxBmcAreaTemp;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -264,7 +264,7 @@ namespace SerialCom
         {
 			V3nc_CmdCode cmdCode;
 
-			cmdCode = (V3nc_CmdCode)((((int)classCode << 8) & 0xFF) | ((int)opCode & 0xFF));
+			cmdCode = (V3nc_CmdCode)((((int)classCode << 8) & 0xFF00) | ((int)opCode & 0x00FF));
 
 			return cmdCode;
 		}

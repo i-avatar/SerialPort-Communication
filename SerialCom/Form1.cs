@@ -31,7 +31,8 @@ namespace SerialCom
             byte[] txBuf;
             V3NC v3NC = V3NC.Instance;
             V3ncBoard board = new V3ncBoard();
-            
+
+#if false
             board.Temp.BmcArea = 25;
             txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetAllTemp, V3nc_UartResponder.Bmc);
             if (txBuf != null)
@@ -52,6 +53,7 @@ namespace SerialCom
 
                 }
             }
+#endif
         }
 
 
@@ -81,7 +83,7 @@ namespace SerialCom
             {
                 comboBoxBaudRate.Items.Add(s);
             }
-            comboBoxBaudRate.SelectedIndex = 0;
+            comboBoxBaudRate.SelectedIndex = 4;
 
             /*------数据位设置-------*/
             string[] dataBit = { "5", "6", "7", "8" };
@@ -319,7 +321,7 @@ namespace SerialCom
                         if (readback_len == 7)
                         {
                             V3NC v3NC = V3NC.Instance;
-                            V3nc_Msg_Err v3Nc_Msg_Err = new V3nc_Msg_Err();
+                            V3nc_Msg_Err v3Nc_Msg_Err;
 
                             // received buffer
                             v3Nc_Msg_Err = v3NC.ValidateV3npMsg(rx_buf);
@@ -328,15 +330,18 @@ namespace SerialCom
                             // no error then send back to target
                             if (v3Nc_Msg_Err == V3nc_Msg_Err.NoErr)
                             {
-                                byte[] txBuf;
+                                byte[] txBuf = null;
                                 V3ncBoard board = new V3ncBoard();
 
                                 // test
                                 board.Temp.BmcArea = 25;
-                                txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetAllTemp, v3NC.currentResponder);
+                                txBuf = v3NC.SendV3npRsp(board, V3nc_CmdCode.GetBmcAreaTemp, v3NC.currentResponder);
 
                                 // write buffer to uart
-                                serialPort.Write(txBuf, 0, txBuf.Length);
+                                if (txBuf != null)
+                                {
+                                    serialPort.Write(txBuf, 0, txBuf.Length);
+                                }
                             }
                         }
 #if false
@@ -348,7 +353,7 @@ namespace SerialCom
                             // Get the integral value of the character.
                             int value = Convert.ToInt32(letter);
                             // Convert the decimal value to a hexadecimal value in string form.
-                            string hexOutput = String.Format("{0:X}", value);
+                            string hexOutput = String.Format("0x{0:X2}", value);
                             textBoxReceive.AppendText(hexOutput + " ");
                             textBoxReceive.SelectionStart = textBoxReceive.Text.Length;
                             textBoxReceive.ScrollToCaret();//滚动到光标处
