@@ -317,6 +317,25 @@ namespace SerialCom
                         readback_len = serialPort.Read(rx_buf, 0, byteToRead);
                         var input = System.Text.Encoding.Default.GetString(rx_buf);
                         char[] values = input.ToCharArray();
+#if false
+                        string input = serialPort.ReadLine();
+                        char[] values = input.ToCharArray();
+#endif
+                        textBoxReceive.AppendText("rx...\r\n");
+                        foreach (char letter in values)
+                        {
+                            // Get the integral value of the character.
+                            int value = Convert.ToInt32(letter);
+                            // Convert the decimal value to a hexadecimal value in string form.
+                            string hexOutput = String.Format("0x{0:X2}", value);
+                            textBoxReceive.AppendText(hexOutput + " ");
+                            textBoxReceive.SelectionStart = textBoxReceive.Text.Length;
+                            textBoxReceive.ScrollToCaret();//滚动到光标处
+                            //textBoxReceive.Text += hexOutput + " ";
+                        }
+                        textBoxReceive.AppendText("\r\n");
+
+                        // response
 
                         if (readback_len == 7)
                         {
@@ -341,24 +360,22 @@ namespace SerialCom
                                 if (txBuf != null)
                                 {
                                     serialPort.Write(txBuf, 0, txBuf.Length);
+
+                                    textBoxReceive.AppendText("tx...\r\n");
+                                    foreach (byte b in txBuf)
+                                    {
+                                        // Get the integral value of the character.
+                                        int value = Convert.ToInt32(b);
+                                        // Convert the decimal value to a hexadecimal value in string form.
+                                        string hexOutput = String.Format("0x{0:X2}", value);
+                                        textBoxReceive.AppendText(hexOutput + " ");
+                                        textBoxReceive.SelectionStart = textBoxReceive.Text.Length;
+                                        textBoxReceive.ScrollToCaret();//滚动到光标处
+                                                                       //textBoxReceive.Text += hexOutput + " ";
+                                    }
+                                    textBoxReceive.AppendText("\r\n");
                                 }
                             }
-                        }
-#if false
-                        string input = serialPort.ReadLine();
-                        char[] values = input.ToCharArray();
-#endif
-                        foreach (char letter in values)
-                        {
-                            // Get the integral value of the character.
-                            int value = Convert.ToInt32(letter);
-                            // Convert the decimal value to a hexadecimal value in string form.
-                            string hexOutput = String.Format("0x{0:X2}", value);
-                            textBoxReceive.AppendText(hexOutput + " ");
-                            textBoxReceive.SelectionStart = textBoxReceive.Text.Length;
-                            textBoxReceive.ScrollToCaret();//滚动到光标处
-                            //textBoxReceive.Text += hexOutput + " ";
-
                         }
 
                         // save data to file
