@@ -75,7 +75,7 @@ namespace SerialCom
                 comboBoxCom.Items.Add(s);
             }
             //设置默认串口选项
-            comboBoxCom.SelectedIndex = 3;
+            comboBoxCom.SelectedIndex = 0;
 
             /*------波特率设置-------*/
             string[] baudRate = { "9600", "19200", "38400", "57600", "115200", "921600" };
@@ -115,6 +115,9 @@ namespace SerialCom
 #if true
             radioButtonSendDataHex.Checked = true;
             radioButtonReceiveDataHEX.Checked = true;
+
+            radioButtonNotAllOk.Checked = true;
+            radioButtonS0.Checked = true;
 #else
             radioButtonSendDataASCII.Checked = true;
             radioButtonReceiveDataASCII.Checked = true;

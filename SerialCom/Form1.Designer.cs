@@ -85,6 +85,12 @@
             this.txBoxBmcAreaTemp = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupBoxSysPwrOk = new System.Windows.Forms.GroupBox();
+            this.radioButtonS0AllPwrOk = new System.Windows.Forms.RadioButton();
+            this.radioButtonNotAllOk = new System.Windows.Forms.RadioButton();
+            this.groupBoxSystemPowerState = new System.Windows.Forms.GroupBox();
+            this.radioButtonS0 = new System.Windows.Forms.RadioButton();
+            this.radioButtonS5 = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.groupBoxSerialPortSetting.SuspendLayout();
             this.groupBoxSendSetting.SuspendLayout();
@@ -92,6 +98,8 @@
             this.groupBoxReceiveData.SuspendLayout();
             this.groupBoxSendData.SuspendLayout();
             this.groupBoxTemp.SuspendLayout();
+            this.groupBoxSysPwrOk.SuspendLayout();
+            this.groupBoxSystemPowerState.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -632,11 +640,79 @@
             this.button1.Text = "V3NC 12V EXT Power";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // groupBoxSysPwrOk
+            // 
+            this.groupBoxSysPwrOk.Controls.Add(this.radioButtonS0AllPwrOk);
+            this.groupBoxSysPwrOk.Controls.Add(this.radioButtonNotAllOk);
+            this.groupBoxSysPwrOk.Location = new System.Drawing.Point(1131, 118);
+            this.groupBoxSysPwrOk.Name = "groupBoxSysPwrOk";
+            this.groupBoxSysPwrOk.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxSysPwrOk.TabIndex = 6;
+            this.groupBoxSysPwrOk.TabStop = false;
+            this.groupBoxSysPwrOk.Text = "SYS_PWROK";
+            // 
+            // radioButtonS0AllPwrOk
+            // 
+            this.radioButtonS0AllPwrOk.AutoSize = true;
+            this.radioButtonS0AllPwrOk.Location = new System.Drawing.Point(19, 63);
+            this.radioButtonS0AllPwrOk.Name = "radioButtonS0AllPwrOk";
+            this.radioButtonS0AllPwrOk.Size = new System.Drawing.Size(117, 21);
+            this.radioButtonS0AllPwrOk.TabIndex = 1;
+            this.radioButtonS0AllPwrOk.TabStop = true;
+            this.radioButtonS0AllPwrOk.Text = "S0 all power ok";
+            this.radioButtonS0AllPwrOk.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonNotAllOk
+            // 
+            this.radioButtonNotAllOk.AutoSize = true;
+            this.radioButtonNotAllOk.Location = new System.Drawing.Point(19, 23);
+            this.radioButtonNotAllOk.Name = "radioButtonNotAllOk";
+            this.radioButtonNotAllOk.Size = new System.Drawing.Size(84, 21);
+            this.radioButtonNotAllOk.TabIndex = 0;
+            this.radioButtonNotAllOk.TabStop = true;
+            this.radioButtonNotAllOk.Text = "Not all ok";
+            this.radioButtonNotAllOk.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxSystemPowerState
+            // 
+            this.groupBoxSystemPowerState.Controls.Add(this.radioButtonS0);
+            this.groupBoxSystemPowerState.Controls.Add(this.radioButtonS5);
+            this.groupBoxSystemPowerState.Location = new System.Drawing.Point(1131, 235);
+            this.groupBoxSystemPowerState.Name = "groupBoxSystemPowerState";
+            this.groupBoxSystemPowerState.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxSystemPowerState.TabIndex = 7;
+            this.groupBoxSystemPowerState.TabStop = false;
+            this.groupBoxSystemPowerState.Text = "System Power State";
+            // 
+            // radioButtonS0
+            // 
+            this.radioButtonS0.AutoSize = true;
+            this.radioButtonS0.Location = new System.Drawing.Point(19, 63);
+            this.radioButtonS0.Name = "radioButtonS0";
+            this.radioButtonS0.Size = new System.Drawing.Size(40, 21);
+            this.radioButtonS0.TabIndex = 1;
+            this.radioButtonS0.TabStop = true;
+            this.radioButtonS0.Text = "S0";
+            this.radioButtonS0.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonS5
+            // 
+            this.radioButtonS5.AutoSize = true;
+            this.radioButtonS5.Location = new System.Drawing.Point(19, 23);
+            this.radioButtonS5.Name = "radioButtonS5";
+            this.radioButtonS5.Size = new System.Drawing.Size(40, 21);
+            this.radioButtonS5.TabIndex = 0;
+            this.radioButtonS5.TabStop = true;
+            this.radioButtonS5.Text = "S5";
+            this.radioButtonS5.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1343, 550);
+            this.Controls.Add(this.groupBoxSystemPowerState);
+            this.Controls.Add(this.groupBoxSysPwrOk);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBoxTemp);
             this.Controls.Add(this.Button_Refresh);
@@ -669,6 +745,10 @@
             this.groupBoxSendData.PerformLayout();
             this.groupBoxTemp.ResumeLayout(false);
             this.groupBoxTemp.PerformLayout();
+            this.groupBoxSysPwrOk.ResumeLayout(false);
+            this.groupBoxSysPwrOk.PerformLayout();
+            this.groupBoxSystemPowerState.ResumeLayout(false);
+            this.groupBoxSystemPowerState.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -732,6 +812,12 @@
         private System.Windows.Forms.TextBox txBoxBmcAreaTemp;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBoxSysPwrOk;
+        private System.Windows.Forms.RadioButton radioButtonS0AllPwrOk;
+        private System.Windows.Forms.RadioButton radioButtonNotAllOk;
+        private System.Windows.Forms.GroupBox groupBoxSystemPowerState;
+        private System.Windows.Forms.RadioButton radioButtonS0;
+        private System.Windows.Forms.RadioButton radioButtonS5;
     }
 }
 

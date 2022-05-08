@@ -448,6 +448,44 @@ namespace SerialCom
 				msgBuffer[i++] = (byte)board.Temp.Cpu0Buck;
 				msgBuffer[i++] = (byte)board.Temp.Cpu0Area;
 			}
+			else if (cmdCode == V3nc_CmdCode.GetSysPwrOkStatus)
+            {
+				msgBuffer[i++] = (byte)board.SystemPwrOkStatus;
+			}
+			else if (cmdCode == V3nc_CmdCode.GetSystemPowerState)
+            {
+				msgBuffer[i++] = (byte)board.SystemPowerState;
+			}
+			else if ((cmdCode == V3nc_CmdCode.SetPowerOff) ||
+					 (cmdCode == V3nc_CmdCode.SetPowerOn) ||
+					 (cmdCode == V3nc_CmdCode.SetPowerReset) ||
+					 (cmdCode == V3nc_CmdCode.SetPowerCycle) ||
+					 (cmdCode == V3nc_CmdCode.SetSoftwarePowerReset))
+            {
+				// FIXME: check current state to set the value,
+				// here to set hard code 0x01 for test
+				msgBuffer[i++] = (byte)0x01;
+			}
+			else if (cmdCode == V3nc_CmdCode.GetWhoIsUartResponder)
+            {
+				msgBuffer[i++] = (byte)board.CurrentUartResponder;
+			}
+			else if (cmdCode == V3nc_CmdCode.SetPassUartCmdToBmc)
+            {
+				if (board.CurrentUartResponder == (byte)V3nc_UartResponder.Cpld)
+                {
+					board.CurrentUartResponder = (byte)V3nc_UartResponder.Bmc;
+					msgBuffer[i++] = (byte)0x01;
+				}
+            }
+			else if (cmdCode == V3nc_CmdCode.SetPassUartCmdToCpld)
+			{
+				if (board.CurrentUartResponder == (byte)V3nc_UartResponder.Bmc)
+				{
+					board.CurrentUartResponder = (byte)V3nc_UartResponder.Cpld;
+					msgBuffer[i++] = (byte)0x01;
+				}
+			}
 
 			checksum = CalculateChecksum(msgBuffer, (dataLength + BASE_RESPONSE_MSG_SIZE));
 			msgBuffer[i++] = checksum;
