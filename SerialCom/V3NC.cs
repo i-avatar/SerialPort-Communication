@@ -129,8 +129,7 @@ namespace SerialCom
 
 	public class CpldVersion_s
 	{
-		public byte Major;
-		public byte Minor;
+		public byte Version;
 	}
 
 	public class DebugCode_s

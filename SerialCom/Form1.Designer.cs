@@ -493,7 +493,7 @@
             this.groupBoxTemp.Size = new System.Drawing.Size(193, 462);
             this.groupBoxTemp.TabIndex = 11;
             this.groupBoxTemp.TabStop = false;
-            this.groupBoxTemp.Text = "groupBox1";
+            this.groupBoxTemp.Text = "Temperatures";
             // 
             // lbCpu0AreaTemp
             // 
